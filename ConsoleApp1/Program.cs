@@ -8,8 +8,7 @@ class Program
     {
         StatesReader reader = new StatesReader();
 
-        State StartState = reader.ReadState("ConsoleApp1\\States\\Start.xml");
-
-        StartState.Show();
+        if (reader.ReadState("ConsoleApp1\\States\\Start.xml", out var StartState))
+            StartState?.Show();
     }
 }

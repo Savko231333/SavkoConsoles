@@ -61,8 +61,8 @@ namespace ConsoleApp1.StateSystem
                         state = null;
                         return false;
                     }
-                    bool skipline;
-                    if (bool.TryParse(xmlReader.GetAttribute("SkipLine"), out skipline))
+
+                    if (bool.TryParse(xmlReader.GetAttribute("SkipLine"), out bool skipline))
                     {
                         System.Console.WriteLine("Успешная загрузка атрибутов SkipLine класса StateOut");
                     }

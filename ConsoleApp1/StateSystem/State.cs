@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+    
 namespace ConsoleApp1.StateSystem
 {
     class State
     {
         public string Name { get; set; }
-        public StateOut TextOut {  get; set; }
-        public StateIn TextIn {  get; set; }
+        public StateOut TextOut { get; set; }
+        public StateIn TextIn { get; set; }
 
-        public State(string name, StateOut textOut, StateIn textIn) 
+        public State(string name, StateOut textOut, StateIn textIn)
         {
             Name = name;
             TextOut = textOut;
