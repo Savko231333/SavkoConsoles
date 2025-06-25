@@ -11,5 +11,9 @@ namespace ConsoleApp1.StateSystem
         public StateOut(string text, bool skipline) : base(text, skipline)
         {
         }
+        public StateOut()
+        {
+            
+        }
     }
 }

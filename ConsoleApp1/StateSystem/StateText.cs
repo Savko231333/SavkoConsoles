@@ -16,5 +16,9 @@ namespace ConsoleApp1.StateSystem
             Text = text;
             SkipLine = skipline;
         }
+        public StateText()
+        {
+            Text = "";
+        }
     }
 }

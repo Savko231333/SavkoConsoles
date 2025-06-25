@@ -10,6 +10,11 @@ namespace ConsoleApp1.StateSystem
     {
         public StateIn(string text, bool skipline) : base(text, skipline)
         {
+
+        }
+        public StateIn()
+        {
+
         }
     }
 }
