@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<State Name ="Стартовая страница">
+	<Out Message = "DVD" SkipLine = "true"/>
+	<In Message = "Введите имя: " SkipLine = "false"/>
+</State>
