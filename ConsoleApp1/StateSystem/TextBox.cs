@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.StateSystem
 {
-    abstract class StateText
+    class TextBox : Text
     {
-        public string Text { get; set; }
         public bool SkipLine { get; set; }
-
-        public StateText(string text, bool skipline)
+        public TextBox(string text, bool skipline) : base(text)
         {
-            Text = text;
             SkipLine = skipline;
         }
-        public StateText()
+        public TextBox()
         {
-            Text = "";
         }
     }
 }

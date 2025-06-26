@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.StateSystem
 {
-    class StateOut : StateText
+    abstract class Text
     {
-        public StateOut(string text, bool skipline) : base(text, skipline)
+        public string Message { get; set; }
+        public Text(string message)
         {
+            Message = message;
         }
-        public StateOut()
+        public Text()
         {
-            
+            Message = "";
         }
     }
 }

@@ -13,8 +13,8 @@ namespace ConsoleApp1.StateSystem
         {
             FileStream fileStream = new FileStream(statePath, FileMode.Open);
             XmlReader xmlReader = XmlReader.Create(fileStream);
-            StateIn stateIn = new StateIn();
-            StateOut stateOut = new StateOut();
+            TextLine line = new TextLine();
+            TextBox textBox = new TextBox();
 
             xmlReader.MoveToContent();
 
@@ -22,22 +22,17 @@ namespace ConsoleApp1.StateSystem
                 throw new ArgumentException("Неверный тип файла");
 
             string? statename = xmlReader.GetAttribute("Name");
+            string fileName = Path.GetFileName(statePath);
 
-            if (!string.IsNullOrEmpty(statename))
+            if (string.IsNullOrEmpty(statename))
             {
-                System.Console.WriteLine("Успешная загрузка названия");
-            }
-            else
-            {
-                System.Console.WriteLine("Ошибка при загрузке атрибутов названия");
-                state = null;
-                return false;
+                throw new ArgumentException($"Ошибка при загрузке атрибутов Name файла {fileName}");
             }
 
             do
             {
                 if (!xmlReader.Read())
-                    throw new ArgumentException("Ошибочка");
+                    throw new ArgumentException("Не удалось прочитать файл");
 
                 if (xmlReader.NodeType == XmlNodeType.EndElement
                     && xmlReader.Name == "State")
@@ -48,59 +43,32 @@ namespace ConsoleApp1.StateSystem
                 if (xmlReader.NodeType == XmlNodeType.EndElement)
                     continue;
 
-                if (xmlReader.Name == "Out")
+                if (xmlReader.Name == "TextLine")
                 {
                     string? message = xmlReader.GetAttribute("Message");
-                    if (!String.IsNullOrEmpty(message))
+
+                    if (string.IsNullOrEmpty(message))
                     {
-                        System.Console.WriteLine("Успешная загрузка атрибутов Message класса StateOut");
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Ошибка при загрузке атрибутов Message класса StateOut");
-                        state = null;
-                        return false;
+                        throw new ArgumentException($"Ошибка при загрузке атрибутов Message файла {fileName}");
                     }
 
-                    if (bool.TryParse(xmlReader.GetAttribute("SkipLine"), out bool skipline))
-                    {
-                        System.Console.WriteLine("Успешная загрузка атрибутов SkipLine класса StateOut");
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Ошибка при загрузке атрибутов SkipLine класса StateOut");
-                        state = null;
-                        return false;
-                    }
-                    stateOut = new StateOut(message, skipline);
+                    line = new TextLine(message);
                 }
-                if (xmlReader.Name == "In")
+                if (xmlReader.Name == "TextBox")
                 {
                     string? message = xmlReader.GetAttribute("Message");
-                    if (!string.IsNullOrEmpty(message))
+
+                    if (string.IsNullOrEmpty(message))
                     {
-                        System.Console.WriteLine("Успешная загрузка атрибутов Message класса StateIn");
+                        throw new ArgumentException($"Ошибка при загрузке атрибутов Message файла {fileName}");
                     }
-                    else
+
+                    if (!bool.TryParse(xmlReader.GetAttribute("SkipLine"), out bool skipline))
                     {
-                        System.Console.WriteLine("Ошибка при загрузке атрибутов Message класса StateIn");
-                        Thread.Sleep(5000);
-                        state = null;
-                        return false;
+                        skipline = false;
                     }
-                    bool skipline;
-                    if (Boolean.TryParse(xmlReader.GetAttribute("SkipLine"), out skipline))
-                    {
-                        System.Console.WriteLine("Успешная загрузка атрибутов SkipLine класса StateIn");
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Ошибка при загрузке атрибутов SkipLine класса StateIn");
-                        Thread.Sleep(5000);
-                        state = null;
-                        return false;
-                    }
-                    stateIn = new StateIn(message, skipline);
+
+                    textBox = new TextBox(message, skipline);
                 }
             }
             while (!xmlReader.EOF);
@@ -112,7 +80,7 @@ namespace ConsoleApp1.StateSystem
                 System.Console.WriteLine($"Начинаем {i}");
                 Thread.Sleep(1000);
             }
-            state = new State(statename, stateOut, stateIn);
+            state = new State(statename, line, textBox);
             return true;
         }
     }

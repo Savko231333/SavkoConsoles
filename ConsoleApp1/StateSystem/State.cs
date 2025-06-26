@@ -9,10 +9,10 @@ namespace ConsoleApp1.StateSystem
     class State
     {
         public string Name { get; set; }
-        public StateOut TextOut { get; set; }
-        public StateIn TextIn { get; set; }
+        public TextLine TextOut { get; set; }
+        public TextBox TextIn { get; set; }
 
-        public State(string name, StateOut textOut, StateIn textIn)
+        public State(string name, TextLine textOut, TextBox textIn)
         {
             Name = name;
             TextOut = textOut;
@@ -22,24 +22,8 @@ namespace ConsoleApp1.StateSystem
         {
             System.Console.Clear();
             System.Console.Title = Name;
-            if (TextOut.SkipLine)
-            {
-                System.Console.WriteLine(TextOut.Text);
-            }
-            else
-            {
-                System.Console.Write(TextOut.Text);
-            }
-            if (TextIn.SkipLine)
-            {
-                System.Console.WriteLine(TextIn.Text);
-                System.Console.ReadLine();
-            }
-            else
-            {
-                System.Console.Write(TextIn.Text);
-                System.Console.ReadLine();
-            }
+
+            
         }
     }
 }
